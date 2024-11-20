@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="top-bar"> <span>{{NEW_CONNECTION_DATABASE}}</span></div>
+    <div class="content">
+        <h5>{{TYPE}}</h5>
+        <section class="cards">
+           <div (click)='ConnectorName("mysql")' class="card"><img src="/assets/img/images/MySQL.svg.png" alt=""></div>
+           <div class="card"><img src="assets/img/images/Oracle-Logo.png" alt=""></div>
+        </section>
+        <section class="cards">
+            <div class="card"><img src="/assets/img/images/postgresql_logo.png" alt=""></div>
+            <div (click)='ConnectorName("mongo")'  class="card"><img src="/assets/img/images/MongoDB-Logo.png" alt=""></div>
+         </section>
+
+
+    </div>
+</div>

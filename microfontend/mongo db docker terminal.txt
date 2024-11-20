@@ -1,0 +1,45 @@
+# mongosh
+Current Mongosh Log ID: 66acb866cdaf58a54a149f47
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.2.10
+Using MongoDB:          7.0.12
+Using Mongosh:          2.2.10
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+
+To help improve our products, anonymous usage data is collected and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the disableTelemetry() command.
+
+------
+   The server generated these startup warnings when booting
+   2024-08-02T09:16:54.057+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2024-08-02T09:16:56.938+00:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+   2024-08-02T09:16:56.938+00:00: /sys/kernel/mm/transparent_hugepage/enabled is 'always'. We suggest setting it to 'never' in this binary version
+   2024-08-02T09:16:56.938+00:00: vm.max_map_count is too low
+------
+
+test> show dbs;
+admin       40.00 KiB
+config     108.00 KiB
+local       40.00 KiB
+mainAppDB   64.00 KiB
+test> use mainAppDB ;
+switched to db mainAppDB
+mainAppDB> show tables ;
+charts
+connectors
+users
+mainAppDB> db.connectors.find() ;
+[
+  {
+    _id: ObjectId('66acb8042a16c16f6f7d3bb0'),
+    name: '454545',
+    url: 'http://localhost:30549'
+  }
+]
+mainAppDB> db.connectors.remove({});
+DeprecationWarning: Collection.remove() is deprecated. Use deleteOne, deleteMany, findOneAndDelete, or bulkWrite.
+{ acknowledged: true, deletedCount: 1 }
+mainAppDB> db.connectors.find() ;
+
+mainAppDB> db.connectors.

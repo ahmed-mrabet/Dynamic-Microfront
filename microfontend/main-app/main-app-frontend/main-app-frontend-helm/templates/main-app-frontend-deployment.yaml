@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: main-app-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: main-app-frontend
+  template:
+    metadata:
+      labels:
+        app: main-app-frontend
+    spec:
+      containers:
+      - name: main-app-frontend
+        image: zizoufg/main-app-frontend:v1.0
+        ports:
+        - containerPort: 4200

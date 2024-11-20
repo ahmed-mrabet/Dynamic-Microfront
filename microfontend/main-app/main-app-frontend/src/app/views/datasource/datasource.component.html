@@ -1,0 +1,30 @@
+<section [ngClass]="{'connectors': connectorsTab.length > 1}" class="content">
+    <div *ngFor="let connector of connectorsTab" class="card">
+        <h4>{{connector.name}}</h4>
+        <p>Connect to your external database to see your tables and start data visualization.
+       </p>
+       <div class="content">
+        <button (click)="viewTables()" mat-raised-button color="primary" >View Tables</button>
+        <button (click)="connectToDatabase()" mat-raised-button color="primary">Connect</button>
+        <button (click)="deleteConnector(connector._id)" mat-raised-button color="warn">Delete</button>
+       </div>
+
+    </div>
+</section>
+<div class="container" >
+    <c-card *ngIf="connectorsTab.length === 0"  id="no-data-dashboard" class="w-400 h-400 no-content ">
+        <c-card-body class="no-content">
+
+
+                    <c-avatar [size]="'md'" src="/assets/img/images/free-sad-face-icon-2691-thumb.png"/>
+                    <h5 class="card-title mb-0 " id="no-data">{{NO_DATA}}</h5>
+                    <h6>{{TEXT}} </h6>
+
+
+
+        </c-card-body>
+    </c-card>
+
+
+
+</div>

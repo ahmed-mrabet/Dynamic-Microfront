@@ -1,0 +1,269 @@
+openapi: 3.0.0
+info:
+  title: home-iot-api
+  description: The API for the EatBacon IOT project
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/AHMEDMRABET_1/mongoDb_connector/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: connect
+  description: connecting to the database
+- name: tables
+  description: tables group
+paths:
+  /connect:
+    post:
+      tags:
+      - connect
+      summary: Connect to the MongoDB database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/connection'
+        required: true
+      responses:
+        "200":
+          description: Successfully connected to the database
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionResponse'
+        "400":
+          description: Bad request - missing or invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionBad'
+        "500":
+          description: Internal server error - connection failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServer'
+  /tables:
+    get:
+      tags:
+      - tables
+      summary: Get all tables
+      parameters:
+      - name: pageNumber
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: tableName
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Tables displayed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableResponse'
+        "400":
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: User is unauthorized to access this resource
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        "403":
+          description: Permission denied
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        "500":
+          description: Internal server error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    connection:
+      type: object
+      properties:
+        host:
+          type: string
+          description: The hostname or IP address of the MongoDB server
+          example: localhost
+        port:
+          type: integer
+          description: The port number on which MongoDB is running
+          example: 27017
+        database:
+          type: string
+          description: The name of the MongoDB database to connect to
+          example: myDatabase
+        username:
+          type: string
+          description: The username for authenticating with MongoDB
+          example: myUsername
+        password:
+          type: string
+          description: The password for authenticating with MongoDB
+          example: myPassword
+    ConnectionResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Connection successful
+    ConnectionBad:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Invalid connection parameters
+    InternalServer:
+      type: object
+      properties:
+        error:
+          type: string
+          example: Failed to connect to the database
+    TableResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/PageWrapper'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/tables'
+    tables:
+      type: object
+      properties:
+        tableName:
+          type: string
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnData'
+    ColumnData:
+      type: object
+      properties:
+        id:
+          type: integer
+        columnKey:
+          type: string
+        columnValue:
+          type: string
+        row_id:
+          type: integer
+    PageWrapper:
+      type: object
+      properties:
+        size:
+          type: integer
+        totalElements:
+          type: integer
+        totalElementsPerPage:
+          type: integer
+        totalPages:
+          type: integer
+        number:
+          type: integer
+    numberNegatif:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+          - Number should not be negative
+        msgCode:
+          type: string
+          enum:
+          - DMA008
+    numberOutOfBound:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+          - "Number should be in [1,2147483647]"
+        msgCode:
+          type: string
+          enum:
+          - DMA009
+    InvalidContentTableError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+          - Content should be an array
+        msgCode:
+          type: string
+          enum:
+          - DMA022
+    unauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+          - Unauthorized access
+        code:
+          type: string
+          enum:
+          - DMA001
+    ErrorDto:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+          - Permission denied
+        code:
+          type: string
+          enum:
+          - DMA002
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+          - Internal Server Error
+        code:
+          type: string
+          enum:
+          - DMA003
+    tableNameError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+          - Invalid table name
+        code:
+          type: string
+          enum:
+          - DMA027
+    inline_response_400:
+      oneOf:
+      - $ref: '#/components/schemas/numberNegatif'
+      - $ref: '#/components/schemas/numberOutOfBound'
+      - $ref: '#/components/schemas/tableNameError'

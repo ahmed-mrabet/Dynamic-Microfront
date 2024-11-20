@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>{{MAT_DIALOG_TITLE}}</h2>
+<mat-dialog-content class="dialog-content">
+    <h4>{{MAT_DIALOG_DESCRIPTION}}</h4>
+    <mat-form-field>
+      <mat-label>{{MAT_DIALOG_LABEL}}</mat-label>
+      <mat-select [(value)]="selectedConnector">
+        
+          <mat-option *ngFor="let connector of connectorsTab" [value]="connector.name">{{connector.name}}</mat-option>
+        
+      </mat-select>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button class="btn btn-primary" (click)="onDialogClose()"  mat-dialog-close >{{MAT_DIALOG_BUTTON}}</button>
+</mat-dialog-actions>

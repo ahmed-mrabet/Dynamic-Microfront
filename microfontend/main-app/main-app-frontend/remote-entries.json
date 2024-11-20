@@ -1,0 +1,11 @@
+[
+  
+ 
+    {
+      "baseUrl": "alerting",
+      "moduleName": "AlertingModule",
+      "remoteEntry": "http://localhost:4201/remoteEntry.js",
+      "remoteName": "alerting",
+      "exposedModule": "./Module"
+    }
+  ]

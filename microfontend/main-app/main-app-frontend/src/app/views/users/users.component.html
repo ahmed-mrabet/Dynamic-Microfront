@@ -1,0 +1,144 @@
+
+<mat-tab-group animationDuration="1000ms">
+  <mat-tab label="Available Users">
+    <table mat-table [dataSource]="usersTab" class="mat-elevation-z8">      
+        <!-- Username Column -->
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef> Username </th>
+          <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+        </ng-container>
+      
+        <!-- FirstName Column -->
+        <ng-container matColumnDef="first Name">
+          <th mat-header-cell *matHeaderCellDef> First Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+        </ng-container>
+      
+        <!-- LastName Column -->
+        <ng-container matColumnDef="last Name">
+          <th mat-header-cell *matHeaderCellDef> Last Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+        </ng-container>
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+          </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+</mat-tab>
+  <mat-tab label="Add Users">
+    <div class="container">
+        <div class="top-bar">
+            <span>Add User</span>
+
+        </div>
+        <div class="content">
+            
+                <div class="line">
+                    <mat-form-field class="input">
+                        <mat-label>Enter Username</mat-label>
+                        <input matInput
+                               
+                               [formControl]="email"
+                               (blur)="updateErrorMessage()"
+                               required>
+                        
+                          <mat-error>{{emailErrorMessage}}</mat-error>
+                        
+                      </mat-form-field>
+    
+                      
+                    <mat-form-field class="input">
+                        <mat-label>Enter FirstName</mat-label>
+                        <input matInput
+                               
+                               [formControl]="email"
+                               (blur)="updateErrorMessage()"
+                               required>
+                        
+                          <mat-error>{{emailErrorMessage}}</mat-error>
+                        
+                      </mat-form-field>
+
+                </div>
+                
+                <div class="line">
+                    <mat-form-field class="input">
+                        <mat-label>Enter LastName</mat-label>
+                        <input matInput
+                               
+                               [formControl]="email"
+                               (blur)="updateErrorMessage()"
+                               required>
+                        
+                          <mat-error>{{emailErrorMessage}}</mat-error>
+                        
+                      </mat-form-field>
+
+                      <mat-form-field class="input">
+                        <mat-label>Enter Email</mat-label>
+                        <input matInput
+                               placeholder="pat@example.com"
+                               [formControl]="email"
+                               (blur)="updateErrorMessage()"
+                               required>
+                        
+                          <mat-error>{{emailErrorMessage}}</mat-error>
+                        
+                      </mat-form-field>
+
+                </div>
+                <div class="line">
+                  <mat-form-field class="input">
+                    <mat-label>Enter Password</mat-label>
+                    <input matInput
+                           placeholder="pat@example.com"
+                           [formControl]="email"
+                           (blur)="updateErrorMessage()"
+                           required>
+                    
+                      <mat-error>{{emailErrorMessage}}</mat-error>
+                    
+                  </mat-form-field>
+
+                  <mat-form-field class="input">
+                    <mat-label>Select Role</mat-label>
+                    <mat-select  >
+                     
+                        <mat-option  *ngFor="let role of roles" [value]="role.value">{{role.value}}</mat-option>
+                      
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                
+                  
+            
+           <button (click)="OpenSuccessDialog()" mat-raised-button color="primary">Add</button>
+              
+
+        </div>
+        
+      </div>
+  </mat-tab>
+  <mat-tab label="Remove Users">
+    <table mat-table [dataSource]="usersTab" class="mat-elevation-z8">      
+        <!-- Username Column -->
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef> Username </th>
+          <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element"> <mat-icon (click)="OpenDialog()">delete</mat-icon> </td>
+          </ng-container>
+      
+      
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsForRemove"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsForRemove;"></tr>
+      </table>
+  </mat-tab>
+</mat-tab-group>

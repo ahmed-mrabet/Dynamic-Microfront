@@ -1,0 +1,53 @@
+.mat-tab-group {
+    margin-bottom: 48px;
+  }
+  table {
+    width: 100%;
+  }
+  .container{
+    
+    width: 70%;
+    padding: 20px;
+    margin-top: 20px;
+    height: 400px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    
+}
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: black;
+    margin: auto;
+}
+.content{
+    width: 100%;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    text-align: center;
+    justify-items: center;
+    align-items: center;
+}
+.input{
+   width: 40%;
+}
+.select{
+    width: 20%;
+}
+.line{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+button{
+    width:100px;
+}

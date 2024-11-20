@@ -1,0 +1,48 @@
+<div class="charts" *ngIf="chartTab.length > 0">
+  <button type="button" (click)="SelectInstance()" class="btn btn-secondary d-flex button" ><mat-icon class="h-300 w-300">{{ADD_CIRCLE}}</mat-icon>{{ADD}}</button>
+  <div  class="charts-container">
+    
+    <div *ngFor="let data of dataset; let i = index" class="chart-card">
+      <div class="card-header">
+        <p class="chart-title">{{ data.chartName }}</p>
+      </div>
+      <div class="chart">
+        <c-chart [data]="data.chartConfig" [type]="data.chartType" (chartRef)="handleChartRef($event, data)"></c-chart>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" >
+    <c-card *ngIf="chartTab.length === 0 && connectorTab.length === 0"  id="no-data-dashboard" class="w-400 h-400 content ">
+        <c-card-body class="content">
+            
+                
+                    <c-avatar [size]="'md'" src="/assets/img/images/free-sad-face-icon-2691-thumb.png"/>
+                    <h5 class="card-title mb-0 " id="no-data">{{NO_DATA}}</h5>
+                    <h6>{{TEXT}} </h6>
+                
+                 
+           
+        </c-card-body>
+    </c-card>
+    
+    <c-card *ngIf="chartTab.length === 0 && connectorTab.length > 0"   class=" h-400 w-400 d-flex flex-row">
+        <div  class="band">
+            <img  src="/assets/img/icons/pie-icon.png" alt="">
+            <img  src="/assets/img/icons/bar-graph-icon.png" alt="">
+            <img  src="/assets/img/icons/side-bar-graph-icon.png" alt="">
+        </div>
+        <c-card-body class="content">
+            <h4>{{START}}</h4>
+            <button type="button" (click)="SelectInstance()" class="btn btn-secondary d-flex " ><mat-icon class="h-300 w-300">{{ADD_CIRCLE}}</mat-icon>{{ADD}}</button>
+        </c-card-body>
+        <div class="band">
+            <img  src="/assets/img/icons/graph-icon.png" alt="">
+            <img  src="/assets/img/icons/donut-graph-icon.png" alt="">
+            <img  src="/assets/img/icons/double-graph-icon.png" alt="">
+        </div>
+    </c-card>
+    
+</div>
+
+  

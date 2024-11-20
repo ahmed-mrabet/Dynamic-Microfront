@@ -1,0 +1,84 @@
+.home-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 0 80px;
+  }
+  .card {
+    position: relative;
+    width: 500px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden; /* Ensure shimmer stays within card bounds */
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+    animation: shimmer 7s infinite linear;
+  }
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  #moving-svg {
+    animation: move-svg 5s infinite alternate;
+  }
+  @keyframes move-svg {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(50px); /* Adjust the distance and direction as needed */
+    }
+  }
+  .card-text {
+    font-size: 19px; /* Increased font size */
+    line-height: 1.5; /* Adjust line height for better readability */
+  }
+  .custom-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4C12B8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .custom-button:hover {
+    background-color: rgb(90, 160, 176);
+  }
+  .side-image {
+    height: auto;
+    max-width: 55%;
+    margin-bottom: 140px;
+  }
+  .card-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%; /* Ensure button container takes full height */
+  }
+  @media screen and (max-width: 1800px) {
+    .custom-button {
+        width: 150px;
+        height: 40px;
+        margin-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

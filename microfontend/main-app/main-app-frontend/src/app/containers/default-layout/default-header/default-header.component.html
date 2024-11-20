@@ -1,0 +1,67 @@
+<!--<c-header class="mb-4 d-print-none" position="sticky">-->
+<ng-container>
+  <c-container [fluid]="true">
+    <button
+      toggle="visible"
+      cHeaderToggler
+      [cSidebarToggle]="sidebarId"
+      class="ps-1"
+    >
+      <svg cIcon
+           name="cilMenu"
+           size="lg"
+      ></svg>
+    </button>
+    <c-header-nav class="ms-3">
+      <span class="text-medium-emphasis d-flex align-items-center">{{username()}}</span>
+      <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
+    </c-header-nav>
+  </c-container>
+  <c-header-divider></c-header-divider>
+  <c-container [fluid]="true">
+    <c-breadcrumb-router class="ms-2"></c-breadcrumb-router>
+  </c-container>
+
+</ng-container>
+<!--</c-header>-->
+
+<ng-template #userDropdown>
+  <c-dropdown alignment="end" variant="nav-item">
+    <button
+      cButton
+      color=""
+      [caret]="false"
+      cDropdownToggle
+      class="py-0"
+    >
+      <c-avatar
+        shape="rounded-1"
+        src="./assets/img/avatars/10.png"
+        status="success"
+      >
+      </c-avatar>
+    </button>
+    <ul cDropdownMenu class="pt-0 pr-5 w-auto">
+      <li>
+        <a routerLink="./" cDropdownItem>
+          <svg cIcon class="me-2" name="cilUser"></svg>
+          {{PROFILE}}
+        </a>
+      </li>
+      <li>
+        <a routerLink="./" cDropdownItem>
+          <svg cIcon class="me-2" name="cilLockLocked"></svg>
+          {{LOCK_ACCOUNT}}
+        </a>
+      </li>
+      <li>
+        <a routerLink="users" cDropdownItem>
+          <svg cIcon class="me-2" name="cilUserFollow"></svg>
+          {{MANAGE_USERS}}
+        </a>
+      </li>
+
+    </ul>
+  </c-dropdown>
+</ng-template>
+
