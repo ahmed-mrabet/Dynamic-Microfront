@@ -1,0 +1,25 @@
+<div class="popup">
+    <div class="top-bar">
+      <span>{{ POPUP_TITLE }}</span>
+    </div>
+    <div class="content">
+      <div class="select-table">
+        <p class="spacing">{{ SELECT_TABLE_LABEL }}</p>
+        <mat-form-field>
+          <mat-label>{{ SELECT_TABLE_LABEL }}</mat-label>
+          <mat-select [(ngModel)]="selectedTables" multiple>
+          <mat-option *ngFor="let table of tables" [value]="table.tableName">{{ table.tableName }}</mat-option>
+        </mat-select>
+      </mat-form-field> 
+      
+      
+     
+      </div>
+       
+      <div class="buttons">
+        <button class="previous-button">{{ PREVIOUS_BUTTON_LABEL }}</button>
+        <button class="next-button" (click)="goToSelectColumns()">{{ NEXT_BUTTON_LABEL }}</button>
+      </div>    
+    </div>
+  </div>
+  

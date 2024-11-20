@@ -1,0 +1,161 @@
+.popup {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 500px;
+
+    margin: 20px auto;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.content {
+    text-align: center;
+}
+
+.select-table {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.select-wrapper,
+.label-wrapper {
+    flex-basis: 48%;
+}
+
+.select-wrapper p,
+.label-wrapper label {
+    margin-bottom: 1px;
+}
+
+.select-wrapper select,
+.label-wrapper input[type="text"] {
+    width: calc(100% - 20px); 
+    padding: 6px;
+}
+
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 18px;
+}
+
+.previous-button {
+    text-align: center;
+    width: 75px;
+    height: 35px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    
+}
+
+.next-button {
+    text-align: center;
+    width: 75px;
+    height: 35px;
+    margin-right: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}
+
+.previous-button:hover,
+.next-button:hover {
+    background-color: #0056b3;
+}
+
+.warning {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px; /* Adjust spacing as needed */
+  }
+
+.chart-name-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-right: 3px;
+}
+
+.chart-name-wrapper label {
+    flex-basis: 20%;
+    text-align: left;
+    padding-top: 7px; /* Align the label with the input field */
+}
+
+.chart-name-wrapper input[type="text"] {
+    flex-basis: 75%;
+    width: calc(100% - 20px); 
+    padding: 6px;
+}
+
+  
+
+@media screen and (max-width: 750px) {
+    .popup {
+        width: 95%;
+        max-width: 100%;
+        height: auto; /* Allow the popup to take full height */
+        padding: 10px; /* Reduce padding on smaller screens */
+    }
+
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        font-weight: 600;
+    }
+
+    .select-table {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .select-wrapper,
+    .label-wrapper {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .select-wrapper select,
+    .label-wrapper input[type="text"] {
+        width: calc(100% - 12px); /* Adjust for smaller padding */
+    }
+
+    .previous-button {
+        margin-left: 0; /* Reset margin for next button */
+        margin-top: 10px; /* Add margin for spacing */
+
+    }
+
+    .next-button {
+        margin-left: 0; /* Reset margin for next button */
+        margin-top: 10px; /* Add margin for spacing */
+        margin-left: 50%;
+    }
+}

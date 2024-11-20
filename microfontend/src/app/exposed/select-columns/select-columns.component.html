@@ -1,0 +1,21 @@
+<div class="popup">
+    <div class="top-bar">
+      <span>{{ POPUP_TITLE }}</span>
+    </div>
+    <div class="content">
+      <div class="label-container">
+        <p>{{ SELECT_COLUMNS_LABEL }}</p>
+        <mat-form-field>
+          <mat-label>{{ selectedTable.tableName }}</mat-label>
+          <mat-select [(ngModel)]="selectedColumns" multiple>
+            <mat-option *ngFor="let column of columns" [value]="column">{{ column }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="buttons">
+        <button class="previous-button" (click)="goToSelectTableToVisualise()">{{ PREVIOUS_BUTTON_LABEL }}</button>
+        <button class="next-button" (click)="goToNextPage()">{{ NEXT_BUTTON_LABEL }}</button>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,52 @@
+
+    <nav *ngIf="isloading === true" class="navbar">
+        <div class="navbar-left">
+            <span class="navbar-text">{{NAVBAR_TEXT}}</span>
+        </div>
+    </nav>
+
+    <div *ngIf="isloading === true" class="content-wrapper">
+
+        <div class="left-content">
+            <nav class="left-navbar">
+                <div class="left-navbar-text">{{ LEFT_NAVBAR_TEXT }}</div>
+            </nav>
+            <div class="list-group">
+              <a  class="list-group-item list-group-item-action" *ngFor="let table of tables" (click)="onListItemClick(table)">
+                {{ table.tableName }}
+              </a>
+            </div>
+            
+            
+        </div>
+
+       
+        <div class="right-content">
+          <div *ngIf="selectedTable">
+            
+              <table class="table">
+                  <thead>
+                    <tr>
+                        <ng-container *ngFor="let columnKey of getColumnKeys()">
+                          <th>{{ columnKey }}</th>
+                        </ng-container>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of this.data">
+                      <td *ngFor="let columnKey of getColumnKeys()">
+                            {{ row.get(columnKey)}}
+                      </td>
+                    </tr>
+                  </tbody>
+                 
+                  <div *ngIf="selectedTable.data.length === 0">
+                      <p>{{ NO_DATA_MESSAGE }}<p>
+                  </div>
+              </table>
+          </div>
+          <div *ngIf="!selectedTable">
+              <p>{{ SELECT_TABLE_MESSAGE }}</p>
+          </div>
+      </div>
+    </div>

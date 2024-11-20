@@ -1,0 +1,40 @@
+<div class="popup">
+    <div class="top-bar">
+        <button mat-icon-button class="previous-button" (click)="goToPreviousPage()">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <div class="popup-title">{{ CONNECTORNAME }}</div>
+    </div>
+    <div class="sub-topbar">
+        <h3>{{ SELECTCHARTMESSAGE }}</h3>
+    </div>
+
+    <div class="content">
+        <div class="left">
+            <h2>{{ selectedItem }}</h2>
+            <div class="image-buttons">
+                <button 
+                    mat-icon-button 
+                    *ngFor="let image of selectedImages; let i = index" 
+                    [disabled]="isButtonDisabled(selectedItem, i)"
+                    [class.disabled-button]="isButtonDisabled(selectedItem, i)"
+                    (click)="onImageClick(i)">
+                    <img [src]="image" alt="Image">
+                </button>
+            </div>
+        </div>
+        <div class="vertical-line"></div>
+        <div class="right">
+            <div class="charts">
+                <h2>{{ RIGHTCONTENTTITLE }}</h2>
+                <div class="buttons">
+                    <button mat-raised-button class="custom-button" (click)="selectItem('Bar')">{{ CHARTTYPE[0] }}</button>
+                    <button mat-raised-button class="custom-button" (click)="selectItem('Column')">{{ CHARTTYPE[1] }}</button>
+                    <button mat-raised-button class="custom-button" (click)="selectItem('Pie')">{{ CHARTTYPE[2] }}</button>
+                    <button mat-raised-button class="custom-button" (click)="selectItem('Graph')">{{ CHARTTYPE[3] }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

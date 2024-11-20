@@ -1,0 +1,30 @@
+canvas {
+    height: 40%;
+    width: 40%;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+  
+.title {
+    font-size: 20px;
+    font-weight: 600; 
+    margin-bottom: 30px;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+.chart-name {
+    font-size: 18px;
+    font-family: 'Open Sans', 'Arial', sans-serif;
+    font-weight: 500;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    text-align: center;
+  }

@@ -1,0 +1,39 @@
+<div class="popup">
+    <div class="top-bar">
+        <span>{{ TOPBARTITLE }}</span>
+    </div>
+    <div class="content">
+        <div class="info-container">
+            <p>{{ SELECTEDTABLEMESSAGE }} {{ selectedTable }}</p>
+        </div>
+        
+        <div class="select-table">
+            <div class="select-row">
+                <p>{{ LABELMESSAGE }}</p>
+                <select id="selectAxisX" [(ngModel)]="selectedLabels" (change)="onlabelsChange()">
+                    <option *ngFor="let column of selectedColumns" [value]="column">{{ column }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="select-table">
+            <div class="select-row">
+                <p>{{ DATAMESSAGE }}</p>
+                <select id="selectAxisY" [(ngModel)]="selectedData" (change)="onAxisYChange()">
+                    <option *ngFor="let column of selectedColumns" [value]="column">{{ column }}</option>
+                </select>
+            </div>
+        </div>
+        
+        <div *ngIf="dataWarning" class="warning">{{ dataWarning }}</div>
+        <div class="select-table">
+            <div class="select-row">
+                <p>{{ CHARTNAMEMESSAGE }}</p>
+                <input type="text" id="chartName" [(ngModel)]="chartName">
+            </div>
+        </div>
+        <div class="buttons">
+            <button class="previous-button" (click)="goToPreviousPage()">{{ PREVIOUSBUTTONTITLE }}</button>
+            <button class="next-button" (click)="goToPiePage()">{{ NEXTBUTTONTITLE }}</button>
+        </div>
+    </div>
+</div>

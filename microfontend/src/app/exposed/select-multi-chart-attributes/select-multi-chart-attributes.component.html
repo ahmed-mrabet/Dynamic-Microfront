@@ -1,0 +1,51 @@
+<div class="popup">
+    <div class="top-bar">
+        <span>{{ TOPBARTITLE }}{{ selectedItem }}</span>
+    </div>
+    <div class="content">
+        
+        <ng-container *ngFor="let table of selectedColumns | keyvalue; let i = index">
+            <div class="info-container">
+                <p>{{ SELECTEDTABLEMESSAGE }} {{ table.key }}</p>
+            </div>
+            <div class="select-row">
+                <div class="select-axis">
+                    <label for="selectAxisX{{i}}">{{ SELECTAXISXMESSAGE }}</label>
+                    <select id="selectAxisX{{i}}" [(ngModel)]="selectedAxisX[i]" (change)="onAxisXChange(i)">
+                        <option *ngFor="let column of table.value" [value]="column" [disabled]="selectedAxisY[i] === column">{{ column }}</option>
+                    </select>
+                </div>
+                <div class="select-axis">
+                    <label for="selectAxisY{{i}}">{{ SELECTAXISYMESSAGE }}</label>
+                    <select id="selectAxisY{{i}}" [(ngModel)]="selectedAxisY[i]" (change)="onAxisYChange(i)">
+                        <option *ngFor="let column of table.value" [value]="column" [disabled]="selectedAxisX[i] === column">{{ column }}</option>
+                    </select>
+                </div>
+            </div>
+        </ng-container>
+        
+        <div *ngIf="yAxisWarning" class="warning">{{ yAxisWarning }}</div>
+        <span>{{ AXISLABEL }}</span>
+        <!-- Insert labels for X and Y axes here -->
+        <div class="axis-name-wrapper">
+            <div class="axis-label">
+                <label for="xAxisLabel">{{ XAXISLABELMESSAGE }}</label>
+                <input type="text" id="xAxisLabel" name="xAxisLabel" [(ngModel)]="xAxisLabel">
+            </div>
+            <div class="axis-label">
+                <label for="yAxisLabel">{{ YAXISLABELMESSAGE }}</label>
+                <input type="text" id="yAxisLabel" name="yAxisLabel" [(ngModel)]="yAxisLabel">
+            </div>
+        </div>
+
+        <div class="chart-name-wrapper"> 
+            <label for="chart-name">{{ CHARTNAMEMESSAGE }}</label>
+            <input type="text" id="chart-name" name="chart-name" [(ngModel)]="chartName">
+        </div>
+        
+        <div class="buttons">
+            <button class="previous-button" (click)="goToPreviousPage()">{{ PREVIOUSBUTTONTITLE }}</button>
+            <button class="next-button" (click)="goToNextPage()">{{ NEXTBUTTONTITLE }} </button>
+        </div>
+    </div>
+</div>

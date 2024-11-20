@@ -1,0 +1,44 @@
+<div class="popup">
+    <div class="top-bar">
+        <span>{{ TOPBARTITLE }}{{ selectedItem }}</span>
+    </div>
+    <div class="content">
+        <div class="info-container">
+            <p>{{ SELECTEDTABLEMESSAGE }} {{ selectedTable }}</p>
+        </div>
+        <div class="select-table">
+            <div class="select-wrapper">
+                <p>{{ SELECTAXISXMESSAGE }}</p>
+                <select id="selectAxisX" [(ngModel)]="selectedAxisX" (change)="onAxisXChange()">
+                    <option *ngFor="let column of selectedColumns" [value]="column">{{ column }}</option>
+                </select>
+            </div>
+            <div class="label-wrapper">
+                <label for="x-axis">{{ LABELMESSAGE }}</label>
+                <input type="text" id="x-axis" name="x-axis" [(ngModel)]="labelX">
+            </div>
+        </div>
+        <div class="select-table">
+            <div class="select-wrapper">
+                <p>{{ SELECTAXISYMESSAGE }}</p>
+                <select id="selectAxisY" [(ngModel)]="selectedAxisY" (change)="onAxisYChange()">
+                    <option *ngFor="let column of selectedColumns" [value]="column">{{ column }}</option>
+                </select>
+            </div>
+            <div class="label-wrapper">
+                <label for="y-axis">{{ LABELMESSAGE }}</label>
+                <input type="text" id="y-axis" name="y-axis" [(ngModel)]="labelY">
+            </div>
+        </div>
+        <div *ngIf="yAxisWarning" class="warning">{{ yAxisWarning }}</div>
+        <div class="chart-name-wrapper"> 
+            <label for="chart-name">{{ CHARTNAMEMESSAGE }}</label>
+            <input type="text" id="chart-name" name="chart-name" [(ngModel)]="chartName">
+        </div>
+        <div class="buttons">
+            <button class="previous-button" (click)="goToPreviousPage()">{{ PREVIOUSBUTTONTITLE }}</button>
+            <button class="next-button" (click)="goToNextPage()">{{ NEXTBUTTONTITLE }} </button>
+        </div>
+    </div>
+</div>
+
