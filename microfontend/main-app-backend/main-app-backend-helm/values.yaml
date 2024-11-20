@@ -1,0 +1,7 @@
+DATABASE_URL: mongodb://mongodb-service/mainAppDB
+CLIENT_ID:  nodejs-admin-client
+BASE_URL: http://my-keycloak-http/auth
+REALM_NAME: octopus
+CLIENT_SECRET: lrWpE97Cn1lIfFxaHYqGZGIbMmlcOt0S
+VALID_ROLES: ['ADMIN', 'USER', 'VIEWER']
+DEPLOY_COMMAND:  helm install mysql-connector-${INSTANCE_ID} ./mysql-connector-backend-helm --set INSTANCE_ID=${INSTANCE_ID} --set SERVICE_PORT=${servicePort} --set CONNECTOR_NAME=${connectorName}

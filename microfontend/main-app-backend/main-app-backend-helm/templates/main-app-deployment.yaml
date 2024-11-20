@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: main-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: main-app
+  template:
+    metadata:
+      labels:
+        app: main-app
+    spec:
+      initContainers:
+        - name: keycloak-checker
+          image: curlimages/curl:latest
+          command: ["sh", "-c", "until curl -s -o /dev/null http://my-keycloak-http/auth/realms/octopus; do echo 'Waiting for Keycloak to be ready...'; sleep 5; done"]
+        - name: mongodb-checker
+          image: curlimages/curl:latest 
+          command: ["sh", "-c", "until curl -s -o /dev/null http://mongodb-service:27017; do echo 'Waiting for mongodb to be ready...'; sleep 5; done"]
+      containers:
+        - name: main-app
+          image: zizoufg/main-app-backend:v1.0
+          ports:
+            - containerPort: 3001
+          
+      

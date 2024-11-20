@@ -1,0 +1,22 @@
+INSTANCE_ID: "1"
+SERVICE_PORT: 30001
+CONNECTOR_NAME: "connector 123"
+# MySQL
+HOST: "mysql"
+PORT: 3306
+USER: "root"
+PASSWORD: "1234"
+# Kafka
+BROKER: "kafka-service.kafka.svc.cluster.local:9092"
+# Prefix of connector name
+CONNECTORPREFIX: "mysql-connector-"
+# Suffix of connector name
+CONNECTORSUFFIX: "-service"
+# Endpoint test
+ENDPOINT: /test
+# Message to Kafka
+MESSAGE: "Hello Kafka from MySQLConnector Instance "
+# Kafka topic
+TOPIC: "alert-topic"
+# HTTP
+PROTOCOL: "http://"

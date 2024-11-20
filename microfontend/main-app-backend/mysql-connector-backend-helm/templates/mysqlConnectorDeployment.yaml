@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-connector-{{.Values.INSTANCE_ID }}-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-connector-{{.Values.INSTANCE_ID}}
+  template:
+    metadata:
+      labels:
+        app: mysql-connector-{{.Values.INSTANCE_ID }}
+    spec:
+      containers:
+        - name: mysql-connector-{{.Values.INSTANCE_ID }}
+          image: zizoufg/mysql-connector-backend:v1.0
+          ports:
+            - containerPort: 3000
+          env:
+            - name: INSTANCE_ID
+              value: "{{.Values.INSTANCE_ID }}"
+            - name: SERVICE_PORT
+              value: "{{.Values.SERVICE_PORT }}"
+            - name: CONNECTOR_NAME
+              value: "{{.Values.CONNECTOR_NAME }}"
+            - name: HOST
+              value: "{{.Values.HOST}}"
+            - name: PORT
+              value: "{{.Values.PORT}}"
+            - name: USER
+              value: "{{.Values.USER}}"
+            - name: PASSWORD
+              value: "{{.Values.PASSWORD}}"
+            - name: BROKER
+              value: "{{.Values.BROKER}}"
+            - name: CONNECTORPREFIX
+              value: "{{.Values.CONNECTORPREFIX}}"
+            - name: CONNECTORSUFFIX
+              value: "{{.Values.CONNECTORSUFFIX}}"
+            - name: ENDPOINT
+              value: "{{.Values.ENDPOINT}}"
+            - name: MESSAGE
+              value: "{{.Values.MESSAGE}}"
+            - name: TOPIC
+              value: "{{.Values.TOPIC}}"
+            - name: PROTOCOL
+              value: "{{.Values.PROTOCOL}}"

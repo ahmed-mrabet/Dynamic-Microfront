@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-connector-{{ .Values.INSTANCE_ID }}-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-connector-{{ .Values.INSTANCE_ID }}-frontend
+  template:
+    metadata:
+      labels:
+        app: mongo-connector-{{ .Values.INSTANCE_ID }}-frontend
+    spec:
+      containers:
+        - name: mongo-connector-{{ .Values.INSTANCE_ID }}-frontend
+          image: mongo-connector-frontend:v1.0
+          ports:
+            - containerPort: {{.Values.SERVICE_PORT_FRONT}}
+          env:
+            - name: BACKEND_BASE_URL
+              value: "http://localhost:{{.Values.SERVICE_PORT}}"
+            - name: SERVICE_PORT
+              value: "{{.Values.SERVICE_PORT}}"
+            - name: CONNECTOR_NAME
+              value: "{{.Values.CONNECTOR_NAME}}"
+            - name: SERVICE_PORT_FRONT
+              value: "{{.Values.SERVICE_PORT_FRONT}}"

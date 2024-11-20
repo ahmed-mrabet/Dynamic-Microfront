@@ -1,0 +1,105 @@
+# ConfigMap for Initialization Script
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-init-script
+  labels:
+    app: mysql
+data:
+  init.sql: |
+    ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '1234';
+---
+#PersistentVolume (PV) definition
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-main-pv
+  labels:
+    meta.helm.sh/release-namespace: default
+    app.kubernetes.io/managed-by: Helm
+    meta.helm.sh/release-name: mysql-database
+spec:
+  capacity:
+    storage: 2Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: standard
+  hostPath:
+    path: /mnt/data/mysql
+---
+# PersistentVolumeClaim (PVC) definition
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-main-data
+  labels:
+    meta.helm.sh/release-namespace: default
+    meta.helm.sh/release-name: mysql-database
+    app.kubernetes.io/managed-by: Helm
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: hostpath
+---
+# MySQL Deployment definition
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  labels:
+    meta.helm.sh/release-namespace: default
+    app.kubernetes.io/managed-by: Helm
+    meta.helm.sh/release-name: mysql-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.3
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: '1234'
+          ports:
+            - containerPort: 3307
+          volumeMounts:
+            - name: mysql-main-data
+              mountPath: /var/lib/mysql
+            - name: mysql-init-script
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: mysql-main-data
+          persistentVolumeClaim:
+            claimName: mysql-main-data
+        - name: mysql-init-script
+          configMap:
+            name: mysql-init-script
+---
+# MySQL Service definition
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  type: LoadBalancer
+  selector:
+    app: mysql
+  ports:
+    - protocol: TCP
+      port: 3307
+      targetPort: 3307
+
+
+
+
+

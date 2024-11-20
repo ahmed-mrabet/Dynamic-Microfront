@@ -1,0 +1,10 @@
+{
+  "realm": "marouenTest",
+  "auth-server-url": "http://localhost/auth/",
+  "ssl-required": "external",
+  "resource": "back",
+  "credentials": {
+    "secret": "HpCTpFyvRfKViOFCs9y0Xin6dFs3kFom"
+  },
+  "confidential-port": 0
+}

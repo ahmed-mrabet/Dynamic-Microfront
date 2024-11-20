@@ -1,0 +1,36 @@
+- hosts: localhost
+  vars:
+    instance_id: "instance_id"
+    connector_name: "connector_name"  
+    service_port: 3307
+    helm_chart_url: "https://charts.bitnami.com/bitnami"
+    service_port_front: 3307
+
+  tasks:
+    - name: Add helm repo
+      kubernetes.core.helm_repository:
+        name: bitnami
+        repo_url: "{{ helm_chart_url }}"
+
+    - name: Deploy MySQL Connector Helm Chart
+      kubernetes.core.helm:
+        name: "mysql-connector-{{ instance_id }}"
+        
+        chart_ref: ../mysql-connector-backend-helm
+        release_namespace: default
+        values:
+          INSTANCE_ID: "{{ instance_id }}"
+          SERVICE_PORT: "{{ service_port }}"
+
+    - name: Deploy MySQL Connector (Frontend) Helm Chart
+      kubernetes.core.helm:
+        name: "mysql-connector-{{ instance_id }}-frontend"
+        
+        chart_ref: ../mysql-connector-frontend-helm
+        release_namespace: default
+        values:
+          INSTANCE_ID: "{{ instance_id }}"
+          SERVICE_PORT: "{{ service_port }}"
+          CONNECTOR_NAME: "{{ connector_name }}"
+          SERVICE_PORT_FRONT: "{{ service_port_front }}"
+          
