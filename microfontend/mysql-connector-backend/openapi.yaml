@@ -1,0 +1,1268 @@
+openapi: 3.0.3
+info:
+  title: >-
+    Dynamic microservices architecture: A monitoring and alerting solution as a
+    use case - OpenAPI 3.0
+  description: >-
+    Serving as a dynamic plugin system, the Dynamic Microservices Architecture
+    is a cutting-edge platform designed to revolutionize data visualization,
+    monitoring, and alerting. By aggregating data from diverse sources, it
+    offers comprehensive insights to drive informed business strategies,
+    empowering users to seamlessly integrate various services for enhanced
+    decision-making.
+  version: 1.0.0
+servers:
+  - url: http://localhost:100/api
+    description: backend url
+paths:
+  /users:
+    get:
+      parameters:
+        - name: pageNumber
+          in: query
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          schema:
+            type: string
+      tags:
+        - users
+      summary: get all users
+      responses:
+        '200':
+          description: Users displayed with success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/numberNegatif'
+                  - $ref: '#/components/schemas/numberOutOfBound'
+        '401':
+          description: User is unauthorized to access this resource
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      tags:
+        - users
+      summary: create user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReqBodyUser'
+      responses:
+        '201':
+          description: user created with success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users'
+        '400':
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/MissingUsernameUserError'
+                  - $ref: '#/components/schemas/MissingRoleUserError'
+                  - $ref: '#/components/schemas/InvalidRoleUserError'
+                  - $ref: '#/components/schemas/ExistingEmailUserError'
+                  - $ref: '#/components/schemas/MissingEmailUserError'
+                  - $ref: '#/components/schemas/InvalidEmailUserError'
+                  - $ref: '#/components/schemas/MissingPhoneNumberUserError'
+                  - $ref: '#/components/schemas/InvalidPhoneNumberUserError'
+        '401':
+          description: User is unauthorized to access this resource
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /users/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      tags:
+        - users
+      summary: Get user by Id
+      responses:
+        '200':
+          description: User displayed succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users'
+        '401':
+          description: User is unauthorized to access this resource
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not found
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/UserError'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    put:
+      tags:
+        - users
+      summary: Edit user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReqBodyUser'
+      responses:
+        '200':
+          description: User edited succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/users'
+        '400':
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/MissingUsernameUserError'
+                  - $ref: '#/components/schemas/MissingRoleUserError'
+                  - $ref: '#/components/schemas/InvalidRoleUserError'
+                  - $ref: '#/components/schemas/ExistingEmailUserError'
+                  - $ref: '#/components/schemas/MissingEmailUserError'
+                  - $ref: '#/components/schemas/InvalidEmailUserError'
+                  - $ref: '#/components/schemas/MissingPhoneNumberUserError'
+                  - $ref: '#/components/schemas/InvalidPhoneNumberUserError'
+        '401':
+          description: User is unauthorized to do this action
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not found
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/UserError'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      tags:
+        - users
+      summary: Delete user by Id
+      responses:
+        '204':
+          description: User deleted succesfully
+        '401':
+          description: User is unauthorized to do this action
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not found
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/UserError'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /connectors:
+    get:
+      tags:
+        - connectors
+      summary: Get connectors
+      parameters:
+        - name: pageNumber
+          in: query
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Connectors displayed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorResponse'
+        '400':
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/numberNegatif'
+                  - $ref: '#/components/schemas/numberOutOfBound'
+        '401':
+          description: User is unauthorized to access this resource
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      tags:
+        - connectors
+      summary: Add new connector
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReqBodyConnector'
+      responses:
+        '201':
+          description: Connector created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connectors'
+        '400':
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/connectorNameError'
+                  - $ref: '#/components/schemas/connectorNameInUseError'
+        '401':
+          description: User is unauthorized to access this resource
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /connectors/{connectorId}:
+    parameters:
+      - name: connectorId
+        in: path
+        required: true
+        description: The Id of the connector
+        schema:
+          type: string
+    get:
+      tags:
+        - connectors
+      summary: Get connector by Id
+      responses:
+        '200':
+          description: Connector information displayed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connectors'
+        '401':
+          description: User is unauthorized to access this resource
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Connector not found
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ConnectorError'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    put:
+      tags:
+        - connectors
+      summary: Edit connector by Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReqBodyConnector'
+      responses:
+        '200':
+          description: Connector edited succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connectors'
+        '400':
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/connectorNameError'
+                  - $ref: '#/components/schemas/connectorNameInUseError'
+        '401':
+          description: User is unauthorized to do this action
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not found
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ConnectorError'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      tags:
+        - connectors
+      summary: Delete an existing connector by connectorID
+      responses:
+        '204':
+          description: Connector deleted successfully
+        '401':
+          description: User is unauthorized to access this resource
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Connector not found
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ConnectorError'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /charts:
+    get:
+      tags:
+        - charts
+      summary: Get all charts by connectorID
+      parameters:
+        - name: pageNumber
+          in: query
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Charts displayed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChartResponse'
+        '400':
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/numberNegatif'
+                  - $ref: '#/components/schemas/numberOutOfBound'
+        '401':
+          description: User is unauthorized to access this resource
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      tags:
+        - charts
+      summary: Add new chart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReqBodyChart'
+      responses:
+        '201':
+          description: Chart created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/charts'
+        '400':
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/chartNameError'
+                  - $ref: '#/components/schemas/chartNameInUseError'
+        '401':
+          description: User is unauthorized to access this resource
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /charts/{chartId}:
+    parameters:
+      - name: chartId
+        in: path
+        required: true
+        description: The ID of the chart
+        schema:
+          type: string
+    get:
+      tags:
+        - charts
+      summary: Get chart by chartId
+      responses:
+        '200':
+          description: Chart information displayed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/charts'
+        '401':
+          description: User is unauthorized to access this resource
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not found
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ChartError'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      tags:
+        - charts
+      summary: Delete an existing chart by chartId
+      responses:
+        '204':
+          description: Chart deleted successfully
+        '401':
+          description: User is unauthorized to access this resource
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not found
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ChartError'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    put:
+      tags:
+        - charts
+      summary: Edit connector by chartId
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReqBodyChart'
+      responses:
+        '200':
+          description: Chart edited succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/charts'
+        '400':
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/chartNameError'
+                  - $ref: '#/components/schemas/chartNameInUseError'
+        '401':
+          description: User is unauthorized to do this action
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '404':
+          description: Not found
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ChartError'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /tables:
+    get:
+      parameters:
+        - name: pageNumber
+          in: query
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          schema:
+            type: string
+        - name: tableName
+          in: query
+          schema:
+            type: string
+      tags:
+        - tables
+      summary: Get all tables
+      responses:
+        '200':
+          description: Tables displayed succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableResponse'
+        '400':
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/numberNegatif'
+                  - $ref: '#/components/schemas/numberOutOfBound'
+                  - $ref: '#/components/schemas/tableNameError'
+                  
+        '401':
+          description: User is unauthorized to access this resource
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      tags:
+        - tables
+      summary: Create table
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReqBodyTable'
+      responses:
+        '201':
+          description: Table created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/tables'
+        '400':
+          description: Bad request
+          content:
+            text/plain:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/MissingColumnsTableError'
+                  - $ref: '#/components/schemas/InvalidColumnsTableError'
+                  - $ref: '#/components/schemas/MissingContentTableError'
+                  - $ref: '#/components/schemas/InvalidContentTableError'
+        '401':
+          description: User is unauthorized to access this resource
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/unauthorizedError'
+        '403':
+          description: Permission denied
+          content:
+            'text/plain:':
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+        '500':
+          description: Internal server Error
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  
+components:
+  schemas:
+  
+    users:
+      type: object
+      properties:
+        id:
+          type: string
+          default: 45ff-rty4-dfrr
+        username:
+          type: string
+          default: aziz
+        role:
+          type: string
+          default: admin
+        email:
+          type: string
+          default: azizmrabet090@gmail.com
+        phone_number:
+          type: integer
+          default: 29150751
+          
+    connectors:
+      type: object
+      properties:
+        id:
+          type: string
+          default: 4az5-457q-33xc
+        name:
+          type: string
+          default: MySQLConnector1
+        type_connector:
+          type: string
+          default: MySQL
+        url:
+          type: string
+          
+    charts:
+      type: object
+      properties:
+        id:
+          type: string
+          default: r45e-78gt-df22
+        name:
+          type: string
+        type_chart:
+          type: string
+          default: Graph
+          
+    tables:
+      type: object
+      properties:
+        tableName:
+          type: string
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ColumnData'
+            
+    ColumnData:
+      type: object
+      properties:
+        id:
+          type: integer
+        columnKey:
+          type: string
+        columnValue:
+          type: string
+        row_id:
+          type: integer
+          
+    unauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Unauthorized access
+        code:
+          type: string
+          enum:
+            - DMA001
+    ErrorDto:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Permission denied
+        code:
+          type: string
+          enum:
+            - DMA002
+            
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Internal Server Error
+        code:
+          type: string
+          enum:
+            - DMA003
+            
+    UserError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - User Not found
+        code:
+          type: string
+          enum:
+            - DMA004
+            
+    TableError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Table Not found
+        code:
+          type: string
+          enum:
+            - DMA005
+            
+    ConnectorError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Connector Not found
+        code:
+          type: string
+          enum:
+            - DMA006
+            
+    ChartError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Chart Not found
+        code:
+          type: string
+          enum:
+            - DMA007
+            
+    PageWrapper:
+      type: object
+      properties:
+        size:
+          type: integer
+        totalElements:
+          type: integer
+        totalElementsPerPage:
+          type: integer
+        totalPages:
+          type: integer
+        number:
+          type: integer
+          
+    numberNegatif:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Number should not be negative
+        msgCode:
+          type: string
+          enum:
+            - DMA008
+            
+    numberOutOfBound:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Number should be be in [1,2147483647]
+        msgCode:
+          type: string
+          enum:
+            - DMA009
+            
+    UserResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          page:
+            $ref: '#/components/schemas/PageWrapper'
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/users'
+              
+    ChartResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          page:
+            $ref: '#/components/schemas/PageWrapper'
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/charts'
+              
+    ConnectorResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          page:
+            $ref: '#/components/schemas/PageWrapper'
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/connectors'
+              
+    TableResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          page:
+            $ref: '#/components/schemas/PageWrapper'
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/tables'
+              
+    ReqBodyUser:
+      type: object
+      properties:
+        username:
+          type: string
+          default: aziz
+        role:
+          type: string
+          default: admin
+        email:
+          type: string
+          default: azizmrabet090@gmail.com
+        phone_number:
+          type: integer
+          default: 29150751
+          
+    ReqBodyConnector:
+      type: object
+      properties:
+        name:
+          type: string
+          default: MySQLConnector1
+        type_connector:
+          type: string
+          default: MySQL
+        url:
+          type: string
+          
+    ReqBodyChart:
+      type: object
+      properties:
+        name:
+          type: string
+        type_chart:
+          type: string
+          default: Graph
+          
+    ReqBodyTable:
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            type: string
+        content:
+          type: array
+          items:
+            type: object
+            
+    MissingUsernameUserError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - username is required
+        msgCode:
+          type: string
+          enum:
+            - DMA010
+            
+    MissingRoleUserError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Role  is required
+        msgCode:
+          type: string
+          enum:
+            - DMA011
+            
+    MissingEmailUserError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Email  is required
+        msgCode:
+          type: string
+          enum:
+            - DMA012
+            
+    MissingPhoneNumberUserError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Phone Number is required
+        msgCode:
+          type: string
+          enum:
+            - DMA014
+            
+    InvalidRoleUserError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - 'Role should be ADMIN, USER or VIEWER '
+        msgCode:
+          type: string
+          enum:
+            - DMA015
+            
+    InvalidEmailUserError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Email format is not valid
+        msgCode:
+          type: string
+          enum:
+            - DMA016
+            
+    InvalidPhoneNumberUserError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Phone Number format is not valid
+        msgCode:
+          type: string
+          enum:
+            - DMA017
+            
+    ExistingEmailUserError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Email already in use
+        msgCode:
+          type: string
+          enum:
+            - DMA018
+            
+    MissingColumnsTableError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Columns is required
+        msgCode:
+          type: string
+          enum:
+            - DMA019
+            
+    MissingContentTableError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Content is required
+        msgCode:
+          type: string
+          enum:
+            - DMA020
+            
+    InvalidColumnsTableError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Columns should be an array
+        msgCode:
+          type: string
+          enum:
+            - DMA021
+            
+    InvalidContentTableError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Content should be an array
+        msgCode:
+          type: string
+          enum:
+            - DMA022
+            
+    connectorNameError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Connector name is required
+        code:
+          type: string
+          enum:
+            - DMA023
+            
+    connectorNameInUseError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Connector name already in use
+        code:
+          type: string
+          enum:
+            - DMA024
+            
+    chartNameError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Chart name is required
+        code:
+          type: string
+          enum:
+            - DMA025
+            
+    chartNameInUseError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Chart name already in use
+        code:
+          type: string
+          enum:
+            - DMA026
+            
+    tableNameError:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - Invalid table name  
+        code:
+          type: string
+          enum:
+            - DMA027
+            
+tags:
+  - name: users
+    description: users group
+  - name: connectors
+    description: connectors group
+  - name: charts
+    description: charts group
+  - name: tables
+    description: tables group
